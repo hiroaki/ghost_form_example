@@ -8,8 +8,8 @@ class V2::MeetingsController < ApplicationController
   end
 
   def refresh
-    @meeting = Meeting.new(meeting_params(scope: :ghost_meeting))
-    render :new
+    @meeting = Meeting.new(meeting_params)
+    render :new, status: :see_other
   end
 
   def create
@@ -26,7 +26,7 @@ class V2::MeetingsController < ApplicationController
 
   private
 
-  def meeting_params(scope: :meeting)
-    params.require(scope).permit(:title, :category, :meeting_room, :meeting_url)
+  def meeting_params
+    params.require(:meeting).permit(:title, :category, :meeting_room, :meeting_url)
   end
 end
